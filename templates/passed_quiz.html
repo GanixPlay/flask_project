@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>Ты молодец!!!<br> Правильных ответов: {{ score }} из {{ maxx }}</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Игрок</th>
+      <th scope="col">Счёт</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for res in results %}
+    <tr>
+      <th scope="row">{{ loop.index }}</th>
+      <td>{{ res.user.name }}</td>
+      <td>{{ res.score }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h3 class="p-3 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">
+        Для доступа к данной странице необходимо авторизоваться
+    </h3>
+    <a href="/login" class="btn btn-success">Войти в аккаунт</a>
+    <a href="/register" class="btn btn-primary">Создать аккаунт</a>
+</div>
+
+{% endblock %}

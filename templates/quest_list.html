@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <!-- Вкладки -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+
+            <a class="nav-link disabled" aria-current="page" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#a1c75a"
+                     class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+                Настройки</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                     class="bi bi-question-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"/>
+                </svg>
+                Вопросы</a>
+        </li>
+    </ul>
+    <!-- Конец вкладок -->
+    <div class="container justify-content-center">
+        <div class="row">
+            <!-- Поле с отображение вопросов -->
+            <div class="container mt-auto">
+                {% for q in questions %}
+                <p>{{ q['id'] }}) {{ q['title'] }}</p>
+                <a class="btn btn-warning" href="/new_quiz/{{ quiz_id }}/{{ q['id'] }}">Редактировать</a>
+                <a class="btn btn-danger" href="/delete/{{ quiz_id }}/{{ q['id'] }}">Удалить</a>
+                {% endfor %}
+                <p>
+                    <!-- Кнопка-триггер модального окна -->
+                    <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Добавить вопрос
+                    </button>
+
+                    {% if questions %}
+                    <a class="btn btn-primary" href="/">Завершить</a>
+                    {% endif %}
+
+                    <!-- Модальное окно -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Выберите тип вопроса</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Закрыть"></button>
+                            </div>
+                            <form method="post" action="">
+                                <div class="modal-body">
+                                    <select class="form-select" aria-label="Пример выбора по умолчанию" name="select">
+                                        <option selected value="test">С вариантами ответа</option>
+                                        <option value="open">Открытый</option>
+                                        <option value="couple">С несколькими правильными ответами</option>
+                                        <option value="image">С картинками вместо варианта</option>
+                                        <option value="voice">Без правильного ответа</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+{% endblock %}

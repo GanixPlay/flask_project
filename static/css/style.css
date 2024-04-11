@@ -1,0 +1,26 @@
+body{
+    font-size: 28px;
+}
+
+.register-link{
+    font-size: 14px;
+}
+
+input#file {
+  width: 0;
+  height: 0;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+
+label:active {
+  box-shadow:none;
+}
+
+question{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+}

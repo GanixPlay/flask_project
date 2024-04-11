@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    {% if quiz.image %}
+    <img src="data:;base64,{{ quiz.image }}" width="960" height="540">
+    {% endif %}
+    <p>{{ quiz.title }}</p>
+    <p>{{ quiz.description }}</p>
+    <a href="/play/{{ quiz.id }}" class="btn btn-success">Играть</a>
+</div>
+
+{% endblock %}

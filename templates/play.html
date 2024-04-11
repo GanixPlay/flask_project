@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-3"></div>
+        <div class="col-6">
+            {% if question['image'] %}
+            <img src="data:;base64,{{ question['image'] }}" max-width="960" height="540"><br>
+            {% endif %}
+            <p>{{ question['title'] }}</p><br>
+
+            <form action="" method="post">
+
+                {% if question['type'] == 'test' %}
+                {% for q in (question['var1'], question['var2'], question['var3'], question['answer'])|shuffle %}
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answer" id="flexRadioDefault{{ loop.index }}"
+                           value="{{ q }}">
+                    <label class="form-check-label" for="flexRadioDefault{{ loop.index }}">
+                        {{ q }}
+                    </label>
+                </div>
+                {% endfor %}
+
+                {% elif question['type'] == 'open' %}
+
+                <div class="container">
+                    <label class="form-check-label" for="field">
+                        Ответ:
+                    </label>
+                    <input class="form-control" name="answer" id="field">
+
+                </div>
+
+                {% endif %}
+
+
+                <button type="submit" class="btn btn-primary mt-3">Далее</button>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+{% endblock %}
