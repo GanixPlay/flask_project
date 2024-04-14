@@ -244,15 +244,19 @@ def delete_quest(quiz_id, quest_id):
     return redirect(f'/new_quiz/{quiz_id}')
 
 
-@app.route('/quiz/<int:quiz_id>')
+@app.route('/quiz/<int:quiz_id>', methods=['GET', 'POST'])
 def quiz_info(quiz_id):
     sess = db_session.create_session()
     quiz = sess.query(Quiz).get(quiz_id)
+    if request.method == 'POST':
+        session['player_name'] = request.form.get('player_name')
+        session['quest_num'] = (-1, 0, 0)
+        print(session['player_name'])
+        return redirect(f'/play/{quiz_id}')
     return render_template('quiz.html', quiz=quiz)
 
 
 @app.route('/play/<int:quiz_id>', methods=['GET', 'POST'])
-@login_required
 def play(quiz_id):
     sess = db_session.create_session()
     quiz = sess.query(Quiz).get(quiz_id)
@@ -284,11 +288,11 @@ def final():
     q_id, quest_count, score = session.get('quest_num', (-1, 0, 0))
     # session['quest_num'] = (-1, 0, 0)
     sess = db_session.create_session()
-    result = sess.query(Results).filter(Results.user_id == flask_login.current_user.id, Results.quiz_id == q_id).first()
+    name = session['player_name']
+    result = sess.query(Results).filter(Results.user_name == name, Results.quiz_id == q_id).first()
     if not result:
-        res = Results(user_id=flask_login.current_user.id,
+        res = Results(user_name=name,
                       quiz_id=q_id,
-                      #user=flask_login.current_user,
                       score=score)
         sess.add(res)
         sess.commit()

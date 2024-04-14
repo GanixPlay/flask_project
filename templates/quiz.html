@@ -8,7 +8,35 @@
     {% endif %}
     <p>{{ quiz.title }}</p>
     <p>{{ quiz.description }}</p>
-    <a href="/play/{{ quiz.id }}" class="btn btn-success">Играть</a>
+
+    <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Играть
+    </button>
+
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Представтесь</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Закрыть"></button>
+                </div>
+                <form method="post" action="">
+                    <div class="modal-body">
+                        <input class="form-control" name="player_name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                        </button>
+                        <button type="submit" class="btn btn-primary">Играть</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
