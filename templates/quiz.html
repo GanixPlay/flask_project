@@ -4,10 +4,12 @@
 
 <div class="container">
     {% if quiz.image %}
-    <img src="data:;base64,{{ quiz.image }}" width="960" height="540">
+    <img src="data:;base64,{{ quiz.image }}" width="960" height="540" class="img-fluid">
     {% endif %}
     <p>{{ quiz.title }}</p>
     <p>{{ quiz.description }}</p>
+
+    <img src="data:;base64,{{ qr }}">
 
     <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Играть

@@ -12,6 +12,7 @@ from forms.question import QuestionForm
 from data.users import User
 from data.quizes import Quiz
 from data.results import Results
+from qrcoder import get_qrcode
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -43,7 +44,8 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='KvantQuiz')
+    qr = get_qrcode('https://lace-necessary-tv.glitch.me/quiz/5')
+    return render_template('index.html', title='KvantQuiz', qr=qr)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -253,7 +255,8 @@ def quiz_info(quiz_id):
         session['quest_num'] = (-1, 0, 0)
         print(session['player_name'])
         return redirect(f'/play/{quiz_id}')
-    return render_template('quiz.html', quiz=quiz)
+    qr = get_qrcode(request.base_url)
+    return render_template('quiz.html', quiz=quiz, qr=qr)
 
 
 @app.route('/play/<int:quiz_id>', methods=['GET', 'POST'])

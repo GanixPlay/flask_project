@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mt-5">
+    <ul class="list-group">
     {% for quiz in quizes %}
-    <a href="/quiz/{{ quiz.id }}">{{ loop.index }} {{ quiz.title }}</a><br>
+    <a href="/quiz/{{ quiz.id }}" class="list-group-item">{{ loop.index }} {{ quiz.title }}</a>
     {% endfor %}
+    </ul>
 </div>
 
 {% endblock %}
