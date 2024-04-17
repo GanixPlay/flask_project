@@ -35,6 +35,19 @@
 
                 </div>
 
+                {% elif question['type'] == 'couple' %}
+
+                {% for q in (question['var1'], question['var2'], question['var3'], question['answer'][0])|shuffle %}
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="answer_check" id="check{{ loop.index }}"
+                           value="{{ q }}">
+                    <label class="form-check-label" for="flexRadioDefault{{ loop.index }}">
+                        {{ q }}
+                    </label>
+                </div>
+                {% endfor %}
+
                 {% endif %}
 
 

@@ -175,11 +175,17 @@ def new_quest(quiz_id, quest_id):
 
     if form.validate_on_submit():
         # print('Hello')
+        if qtype == 'couple':
+            answer = [form.answer.data]
+            answer.extend([request.form.get(x) for x in request.form.getlist('cor')])
+        else:
+            answer = form.answer.data
+        image = base64.b64encode(form.image.data.read()).decode("ascii")
         sl = {'id': quest_id,
               'type': qtype,
-              'image': base64.b64encode(form.image.data.read()).decode("ascii"),
+              'image': image,
               'title': form.title.data,
-              'answer': form.answer.data,
+              'answer': answer,
               'var1': form.var1.data,
               'var2': form.var2.data,
               'var3': form.var3.data}
@@ -187,10 +193,11 @@ def new_quest(quiz_id, quest_id):
         quiz = sess.query(Quiz).filter(Quiz.id == quiz_id).first()
         if quest_id - 1 < len(quiz.quiz['questions']):
             quests = quiz.quiz['questions'][::]
+            if not form.image.data:
+                image = quests[quest_id - 1]['image']
+                sl['image'] = image
             quests[quest_id - 1] = sl
-            print(quests)
             quiz.quiz = {'questions': quests[::]}
-            print(quiz.quiz)
         else:
             # quests = quiz.quiz['questions']
             # print(quests)
@@ -209,17 +216,21 @@ def new_quest(quiz_id, quest_id):
         # print(session
         #       )
         return redirect(f'/new_quiz/{quiz_id}')
-
+    # редактирование
     if quest_id - 1 < len(quests):
         quest = quests[quest_id - 1]
         qtype = quest['type']
+        form.image.data = quest['image']
         form.title.data = quest['title']
-        form.answer.data = quest['answer']
+        if qtype == 'couple':
+            form.answer.data = quest['answer'][0]
+        else:
+            form.answer.data = quest['answer']
         form.var1.data = quest['var1']
         form.var2.data = quest['var2']
         form.var3.data = quest['var3']
 
-    return render_template('questions_settings.html', form=form, type=qtype)
+    return render_template('questions_settings.html', form=form, type=qtype, quest=quest)
 
 
 @app.route('/my_quizes')
@@ -268,8 +279,13 @@ def play(quiz_id):
         session['quest_num'] = (quiz_id, 0, 0)
         q_id, quest_count, score = quiz_id, 0, 0
     if request.method == 'POST':
-        if request.form.get('answer') == quiz.quiz['questions'][quest_count]['answer']:
-            score += 1
+        if quiz.quiz['questions'][quest_count]['type']:
+            if set(request.form.getlist('answer_check')) == set(quiz.quiz['questions'][quest_count]['answer']):
+                score += 1
+            elif request.form.get('answer') == quiz.quiz['questions'][quest_count]['answer']:
+                score += 1
+            else:
+                print('incorrect')
         else:
             print('incorrect')
         session['quest_num'] = (quiz_id, quest_count + 1, score)
@@ -308,6 +324,17 @@ def catalog():
     sess = db_session.create_session()
     quizes = sess.query(Quiz).filter(Quiz.is_public == 1).all()
     return render_template('catalog.html', quizes=quizes)
+
+
+@app.route('/delete/<int:quiz_id>')
+@login_required
+def delete_quiz(quiz_id):
+    sess = db_session.create_session()
+    quiz = sess.query(Quiz).get(quiz_id)
+    sess.delete(quiz)
+    sess.commit()
+    sess.close()
+    return redirect('/my_quizes')
 
 
 def main():

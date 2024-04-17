@@ -36,9 +36,24 @@
                 {% if type %}
                 <form action="" method="post" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}
+
                     <p>
+                        {% if not quest or not quest['image'] %}
+                        <label for="file" id="file-upload"><img src="/static/img/card-image.svg"
+                                                                width="100"
+                                                                height="100"
+                                                                id="blah"
+                                                                class="img-fluid"></label><br>
+                        {% elif quest and quest['image'] %}
+                        <label for="file" id="file-upload"><img src="data:;base64,{{ quest['image'] }}"
+                                                                width="100"
+                                                                height="100"
+                                                                id="blah"
+                                                                class="img-fluid"></label><br>
+                        {% endif %}
                         {{ form.image.label }}<br>
-                        {{ form.image(type="file", class="form-control") }}<br>
+                        {{ form.image(class="form-control", type="file", id="file", onchange="document.getElementById('blah').src =
+                        window.URL.createObjectURL(this.files[0])") }}<br>
                         {% for error in form.image.errors %}
                     <p class="alert alert-danger">{{ error }}</p>
                     {% endfor %}
@@ -79,7 +94,41 @@
                     <p class="alert alert-danger">{{ error }}</p>
                     {% endfor %}
                     </p>
-                    {% elif type == 'open' %}
+                    {% elif type == 'couple' %}
+
+
+                    <p>
+                        <input class="form-check-input" type="checkbox" value="var1" id="flexCheckDefault" name="cor">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Правильный вариант
+                        </label>
+                        {{ form.var1.label }}<br>
+                        {{ form.var1(class="form-control") }}<br>
+                        {% for error in form.var1.errors %}
+                    <p class="alert alert-danger">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                    <p>
+                        <input class="form-check-input" type="checkbox" value="var2" id="flexCheckDefault2" name="cor">
+                        <label class="form-check-label" for="flexCheckDefault2">
+                            Правильный вариант
+                        </label>
+                        {{ form.var2.label }}<br>
+                        {{ form.var2(class="form-control") }}<br>
+                        {% for error in form.var2.errors %}
+                    <p class="alert alert-danger">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                    <p>
+                        <input class="form-check-input" type="checkbox" value="var3" id="flexCheckDefault3" name="cor">
+                        <label class="form-check-label" for="flexCheckDefault3">
+                            Правильный вариант
+                        </label>
+                        {{ form.var3.label }}<br>
+                        {{ form.var3(class="form-control") }}<br>
+                        {% for error in form.var3.errors %}
+                    <p class="alert alert-danger">{{ error }}</p>
+                    {% endfor %}
 
 
                     {% endif %}

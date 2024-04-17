@@ -29,14 +29,19 @@
         <div class="row">
             <!-- Поле с отображение вопросов -->
             <div class="container mt-auto">
-                {% for q in questions %}
-                <p>{{ q['id'] }}) {{ q['title'] }}</p>
-                <a class="btn btn-warning" href="/new_quiz/{{ quiz_id }}/{{ q['id'] }}">Редактировать</a>
-                <a class="btn btn-danger" href="/delete/{{ quiz_id }}/{{ q['id'] }}">Удалить</a>
-                {% endfor %}
-                <p>
+                <ul class="list-group">
+                    {% for q in questions %}
+                    <li class="list-group-item">
+                        <p class="mt-2">{{ q['id'] }}) {{ q['title'] }}</p>
+                        <a class="btn btn-warning" href="/new_quiz/{{ quiz_id }}/{{ q['id'] }}">Редактировать</a>
+                        <a class="btn btn-danger" href="/delete/{{ quiz_id }}/{{ q['id'] }}">Удалить</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <p class="mt-3">
                     <!-- Кнопка-триггер модального окна -->
-                    <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
                         Добавить вопрос
                     </button>
 
@@ -59,7 +64,7 @@
                                     <select class="form-select" aria-label="Пример выбора по умолчанию" name="select">
                                         <option selected value="test">С вариантами ответа</option>
                                         <option value="open">Открытый</option>
-                                        <option value="couple" disabled="disabled">С несколькими правильными ответами</option>
+                                        <option value="couple">С несколькими правильными ответами</option>
                                         <option value="image" disabled="disabled">С картинками вместо варианта</option>
                                         <option value="voice" disabled="disabled">Без правильного ответа</option>
                                     </select>
@@ -79,7 +84,6 @@
 
         </div>
     </div>
-
 
 
 </div>

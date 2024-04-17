@@ -2,10 +2,54 @@
 
 {% block content %}
 
-<div class="container">
-    {% for quiz in current_user.quizes %}
-    <a href="/new_quiz/{{ quiz.id }}">{{ quiz.id }} {{ quiz.title }}</a><br>
-    {% endfor %}
+<div class="container mt-5">
+    <!--<ul class="list-group">-->
+    <ol class="list-group list-group-numbered">
+        {% for quiz in current_user.quizes %}
+
+        <!--<li class="list-group-item">{{ loop.index }} {{ quiz.title }}
+        <a href="/new_quiz/{{ quiz.id }}" class="btn btn-primary ">Редактировать</a>
+        </li>-->
+
+
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{ quiz.title }}</div>
+            </div>
+            <!--<span class="badge bg-primary rounded-pill">14</span>-->
+            <a class="btn btn-primary me-3" href="/new_quiz/{{ quiz.id }}">Редактировать</a>
+            <!--<a class="btn btn-danger" href="/delete/{{ quiz.id }}">Удалить</a>-->
+            <!-- Кнопка-триггер модального окна -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Удалить
+            </button>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Подтвердите действие</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Вы точно хотите удалить квиз? Квиз будет удален безвозвратно.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <a href="/delete/{{ quiz.id }}" class="btn btn-danger">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+        {% endfor %}
+
+    </ol>
 </div>
 
 {% endblock %}
