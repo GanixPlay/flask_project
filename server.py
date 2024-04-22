@@ -128,6 +128,33 @@ def new_quiz():
     return render_template('quiz_settings.html', form=form)
 
 
+@app.route('/new_quiz/<int:quiz_id>/settings', methods=['GET', 'POST'])
+@login_required
+def quiz_setting(quiz_id):
+    form = NewQuizForm()
+    if request.method == 'GET':
+        sess = db_session.create_session()
+        quiz = sess.query(Quiz).get(quiz_id)
+
+        if quiz:
+            form.title.data = quiz.title
+            form.description.data = quiz.description
+            form.is_public.data = quiz.is_public
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        sess = db_session.create_session()
+        quiz = sess.query(Quiz).get(quiz_id)
+        if quiz:
+            quiz.title = form.title.data
+            quiz.description = form.description.data
+            quiz.is_public = form.is_public.data
+            sess.commit()
+            return redirect(f'/new_quiz/{quiz_id}')
+    return render_template('quiz_settings.html', form=form)
+
+
+
 @app.route('/new_quiz/<int:quiz_id>', methods=['GET', 'POST'])
 @login_required
 def quest_lsit(quiz_id):
@@ -268,7 +295,8 @@ def quiz_info(quiz_id):
         print(session['player_name'])
         return redirect(f'/play/{quiz_id}')
     qr = get_qrcode(request.base_url)
-    return render_template('quiz.html', quiz=quiz, qr=qr)
+    results = sorted(sess.query(Results).filter(Results.quiz_id == quiz_id).all(), key=lambda x: x.score, reverse=True)
+    return render_template('quiz.html', quiz=quiz, qr=qr, results=results)
 
 
 @app.route('/play/<int:quiz_id>', methods=['GET', 'POST'])

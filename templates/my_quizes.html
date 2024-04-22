@@ -17,7 +17,8 @@
                 <div class="fw-bold">{{ quiz.title }}</div>
             </div>
             <!--<span class="badge bg-primary rounded-pill">14</span>-->
-            <a class="btn btn-primary me-3" href="/new_quiz/{{ quiz.id }}">Редактировать</a>
+            <a class="btn btn-primary me-3" href="/quiz/{{ quiz.id }}">Просмотр</a>
+            <a class="btn btn-warning me-3" href="/new_quiz/{{ quiz.id }}">Редактировать</a>
             <!--<a class="btn btn-danger" href="/delete/{{ quiz.id }}">Удалить</a>-->
             <!-- Кнопка-триггер модального окна -->
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ loop.index }}">
