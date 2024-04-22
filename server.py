@@ -67,11 +67,11 @@ def register():
         user.set_password(form.password.data)
         sess.add(user)
         sess.commit()
-        return redirect('/login')
+        return redirect('/admin')
     return render_template('register.html', form=form, title='Регистрация')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/admin', methods=['GET', 'POST'])
 def login():
     session['quest_num'] = (-1, 0, 0)
     form = LoginForm()
@@ -217,6 +217,7 @@ def new_quest(quiz_id, quest_id):
         #       )
         return redirect(f'/new_quiz/{quiz_id}')
     # редактирование
+    quest = None
     if quest_id - 1 < len(quests):
         quest = quests[quest_id - 1]
         qtype = quest['type']

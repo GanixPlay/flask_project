@@ -20,12 +20,12 @@
             <a class="btn btn-primary me-3" href="/new_quiz/{{ quiz.id }}">Редактировать</a>
             <!--<a class="btn btn-danger" href="/delete/{{ quiz.id }}">Удалить</a>-->
             <!-- Кнопка-триггер модального окна -->
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ loop.index }}">
                 Удалить
             </button>
 
             <!-- Модальное окно -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="exampleModal{{ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
