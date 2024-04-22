@@ -15,7 +15,7 @@
                 Настройки</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#">
+            <a class="nav-link" style="color: black;" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi bi-question-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -25,7 +25,7 @@
         </li>
     </ul>
     <!-- Конец вкладок -->
-
+    <div class="container border py-3">
     <form action="" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p>
@@ -52,6 +52,7 @@
         <p>{{ form.is_public() }} {{ form.is_public.label }}</p>
         {{ form.submit(type="submit", class="btn btn-success") }}
     </form>
+    </div>
 
 </div>
 {% endblock %}

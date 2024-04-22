@@ -3,11 +3,17 @@
 {% block content %}
 
 <div class="container mt-5">
-    <ul class="list-group">
-    {% for quiz in quizes %}
-    <a href="/quiz/{{ quiz.id }}" class="list-group-item">{{ loop.index }} {{ quiz.title }}</a>
-    {% endfor %}
-    </ul>
+    <ol class="list-group list-group-numbered">
+        {% for quiz in quizes %}
+        <a class="list-group-item d-flex justify-content-between align-items-start" href="/quiz/{{ quiz.id }}">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">
+                    {{ quiz.title }}</div>
+            </div>
+
+        </a>
+        {% endfor %}
+    </ol>
 </div>
 
 {% endblock %}
