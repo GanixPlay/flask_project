@@ -47,6 +47,31 @@
         </div>
         <div class="border py-5 px-5" style="border-radius: 20px;">
             <h2 align="center">Результаты</h2>
+
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ quiz.id }}">
+                Сброс результатов
+            </button>
+
+            <div class="modal fade" id="exampleModal{{ quiz.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel{{ quiz.id }}">Подтвердите действие</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Вы точно хотите сбросить результаты? Результаты будут удалены безвозвратно.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <a class="btn btn-danger" href="/delete_results/{{ quiz.id }}">Удалить результаты</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <table class="table">
                 <thead>
                 <tr>

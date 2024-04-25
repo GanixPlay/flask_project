@@ -369,6 +369,18 @@ def delete_quiz(quiz_id):
     return redirect('/my_quizes')
 
 
+@app.route('/delete_results/<int:quiz_id>')
+@login_required
+def delete_results(quiz_id):
+    sess = db_session.create_session()
+    results = sess.query(Results).filter(Results.quiz_id == quiz_id).all()
+    for result in results:
+        sess.delete(result)
+    sess.commit()
+    sess.close()
+    return redirect(f'/quiz/{quiz_id}')
+
+
 def main():
     db_session.global_init("db/blogs.db")
     api.add_resource(ResultResource, '/api/results/<int:quiz_id>')
