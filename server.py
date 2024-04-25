@@ -1,6 +1,7 @@
 import flask_login
 from flask import Flask, url_for, request, render_template, redirect, abort, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_restful import reqparse, Api, Resource
 import base64
 import random
 
@@ -13,8 +14,10 @@ from data.users import User
 from data.quizes import Quiz
 from data.results import Results
 from qrcoder import get_qrcode
+from data.result_resuorce import ResultResource
 
 app = Flask(__name__)
+api = Api(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 login_manager = LoginManager()
@@ -368,6 +371,7 @@ def delete_quiz(quiz_id):
 
 def main():
     db_session.global_init("db/blogs.db")
+    api.add_resource(ResultResource, '/api/results/<int:quiz_id>')
     app.run('127.0.0.1', 8080)
 
 
